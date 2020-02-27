@@ -4,6 +4,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -79,7 +80,30 @@ public class IOWriterReader {
     }
 
     @Test
-    public void compareCostTime() {
+    public void fileInputStream() {
+        String str = null;
+        try {
+            InputStream inputStream = new FileInputStream(new File("bufferedFile"));
+            StringBuilder builder = new StringBuilder();
+            byte[] buff = new byte[1024];
+            int len = 0;
+            while ((len = inputStream.read(buff)) != -1) {
+                builder.append(new String(buff, StandardCharsets.UTF_8));
+            }
+            str = builder.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(str);
+    }
+
+    @Test
+    public void fileOutputStream() {
+
+    }
+
+    @Test
+    public void compareBufferCostTime() {
         Instant before = Instant.now();
         fileWriter();
         Instant after = Instant.now();
